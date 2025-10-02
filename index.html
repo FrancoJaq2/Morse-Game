@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morse Master - Tu Juego de Código Morse</title>
+    <title>Morse Master - Cursos y Desafíos</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -36,71 +36,115 @@
 <body class="bg-bg-dark text-white min-h-screen p-4 md:p-8 font-sans">
 
     <div class="max-w-4xl mx-auto bg-slate-800 shadow-2xl rounded-xl p-6 md:p-10">
-        <h1 class="text-4xl font-extrabold text-center mb-2 text-purple-400">Morse Master</h1>
-        <p class="text-center text-slate-400 mb-6">Aprende, Codifica y Decodifica el Código Morse</p>
+        <h1 class="text-4xl font-extrabold text-center mb-2 text-purple-400">Morse Master Cursos 🎓</h1>
+        <p class="text-center text-slate-400 mb-6">Aprende por Niveles y Domina el Código Morse</p>
 
-        <div class="w-full bg-slate-700 rounded-full h-2.5 mb-6">
-            <div id="progress" class="bg-purple-600 h-2.5 rounded-full transition-all duration-500" style="width: 25%"></div>
-        </div>
-        
         <div class="flex flex-wrap justify-center space-x-4 mb-8">
             <div class="stats-card bg-slate-700 p-4 rounded-lg">
                 <p class="text-sm text-slate-400 uppercase">Puntuación Total</p>
                 <p id="score" class="text-3xl font-bold text-emerald-400">0</p>
             </div>
             <div class="stats-card bg-slate-700 p-4 rounded-lg">
-                <p class="text-sm text-slate-400 uppercase">Nivel de Dominio</p>
+                <p class="text-sm text-slate-400 uppercase">Nivel Actual</p>
                 <p id="level" class="text-3xl font-bold text-purple-400">1</p>
             </div>
             </div>
 
         <div class="flex justify-center flex-wrap gap-3 mb-8">
-            <button id="btn-reference" onclick="showPhase('reference')" class="phase-btn bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
-                1. Referencia
+            <button id="btn-courses" onclick="showPhase('courses')" class="nav-btn bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                Cursos
             </button>
-            <button id="btn-decode" onclick="showPhase('decode')" class="phase-btn bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
-                2. Decodificación
+            <button id="btn-reference" onclick="showPhase('reference')" class="nav-btn bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                Referencia
             </button>
-            <button id="btn-encode" onclick="showPhase('encode')" class="phase-btn bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
-                3. Codificación
-            </button>
-            <button id="btn-challenge" onclick="showPhase('challenge')" class="phase-btn bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
-                4. Desafío
+            <button id="btn-challenge" onclick="showPhase('challenge')" class="nav-btn bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                Desafío Global
             </button>
         </div>
 
-        <div id="phase-reference" class="phase-content">
-            <h2 class="text-3xl font-bold mb-4 text-center">Tabla de Referencia (¡Haz clic!)</h2>
+        <div id="phase-courses" class="phase-content">
+            <h2 class="text-3xl font-bold mb-4 text-center text-emerald-400">Selecciona tu Nivel de Aprendizaje</h2>
+            <p class="text-center text-slate-400 mb-6">Completa un curso para desbloquear el siguiente y ganar puntos.</p>
             
-            <div class="mb-8 p-4 bg-purple-900/50 rounded-lg">
-                <h3 class="text-xl font-bold text-purple-400 mb-3">⚙️ Configuración y Lecciones</h3>
-                <div class="flex flex-wrap gap-4 justify-center">
-                    <div>
-                        <label class="block text-slate-300 mb-1">Modo de Práctica</label>
-                        <select id="mode-select" onchange="setGameMode(this.value)" class="bg-slate-700 text-white p-2 rounded">
-                            <option value="LETTERS">Letras (Individuales)</option>
-                            <option value="WORDS" selected>Palabras (Decodificación)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-slate-300 mb-1">Idioma de Palabras</label>
-                        <select id="language-select" onchange="setGameLanguage(this.value)" class="bg-slate-700 text-white p-2 rounded">
-                            <option value="ES" selected>Español</option>
-                            <option value="EN">Inglés</option>
-                        </select>
-                    </div>
-                    <button onclick="showAlphabetOrder()" class="bg-purple-600 hover:bg-purple-700 py-2 px-4 rounded-lg font-semibold self-end">
-                        Mostrar Abecedario en Orden
-                    </button>
+            <div class="flex justify-center gap-4 mb-6 p-4 bg-slate-700 rounded-lg">
+                <div>
+                    <label class="block text-slate-300 mb-1">Idioma de Palabras</label>
+                    <select id="language-select" onchange="setGameLanguage(this.value)" class="bg-slate-900 text-white p-2 rounded">
+                        <option value="ES" selected>Español</option>
+                        <option value="EN">Inglés</option>
+                    </select>
                 </div>
             </div>
 
-            <div id="alphabet-order-container" class="hidden mt-6 mb-8 p-4 bg-slate-700 rounded-lg">
-                <h3 class="text-xl font-bold text-emerald-400 mb-3">Abecedario en Orden (A-Z)</h3>
-                <div id="alphabet-order-grid" class="grid grid-cols-5 md:grid-cols-7 gap-3">
-                    </div>
+            <div id="courses-list" class="space-y-4">
+                </div>
+        </div>
+
+        <div id="phase-lesson" class="phase-content hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="lesson-title" class="text-3xl font-bold text-purple-400">Nivel X: Nombre del Curso</h2>
+                <button onclick="showPhase('courses')" class="text-slate-400 hover:text-white transition">← Volver a Cursos</button>
             </div>
 
+            <div id="lesson-content-container">
+                <div class="mb-6 p-4 bg-purple-900/50 rounded-lg">
+                    <h3 class="text-xl font-bold text-purple-400 mb-2">Aprender</h3>
+                    <p id="lesson-description" class="text-slate-200 mb-4">Descripción del curso.</p>
+                    <p class="text-sm text-slate-400">Caracteres en este nivel:</p>
+                    <div id="lesson-chars-grid" class="grid grid-cols-4 md:grid-cols-6 gap-2 mt-2">
+                        </div>
+                </div>
+
+                <button onclick="startLessonTrivia()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-4 rounded-lg font-bold text-xl transition-colors">
+                    Empezar Trivia de Decodificación (10 Preguntas)
+                </button>
+            </div>
+        </div>
+        
+        <div id="phase-trivia" class="phase-content hidden">
+            <h2 id="trivia-title" class="text-3xl font-bold mb-4 text-center text-purple-400">Trivia del Curso: Letras Básicas</h2>
+            <p id="trivia-instruction" class="text-center text-slate-400 mb-6">Escucha el código Morse y elige la respuesta correcta.</p>
+
+            <div class="p-6 bg-slate-700 rounded-lg text-center mb-6">
+                <p id="morse-display" class="text-4xl font-mono text-purple-400 mb-4">— • — •</p>
+                <button onclick="playCurrentMorse()" class="bg-emerald-600 hover:bg-emerald-700 py-2 px-4 rounded-lg font-semibold transition-colors">
+                    🔊 Escuchar de nuevo
+                </button>
+                <p class="text-sm text-slate-400 mt-2">¿Qué es?</p>
+            </div>
+
+            <p id="trivia-question-num" class="text-lg text-center font-semibold mb-4">Pregunta 1 de 10</p>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <button id="option-0" onclick="selectTriviaAnswer(0)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN A</button>
+                <button id="option-1" onclick="selectTriviaAnswer(1)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN B</button>
+                <button id="option-2" onclick="selectTriviaAnswer(2)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN C</button>
+                <button id="option-3" onclick="selectTriviaAnswer(3)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN D</button>
+            </div>
+
+            <div id="trivia-feedback" class="text-center mb-6">
+                </div>
+
+            <button id="next-trivia" onclick="nextTriviaQuestion()" class="hidden w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-bold transition-colors">
+                Siguiente Pregunta →
+            </button>
+        </div>
+
+        <div id="phase-results" class="phase-content hidden">
+            <h2 class="text-3xl font-bold mb-6 text-center text-emerald-400">Resultados del Curso</h2>
+            <div class="p-8 bg-slate-700 rounded-lg text-center">
+                <p class="text-xl text-slate-200 mb-4">Puntuación Obtenida:</p>
+                <p id="result-score" class="text-6xl font-extrabold text-emerald-400 mb-4">+0</p>
+                <p id="result-message" class="text-xl font-semibold mb-6">¡Mensaje de felicitaciones y desbloqueo!</p>
+                <button onclick="showPhase('courses')" class="bg-purple-600 hover:bg-purple-700 py-3 px-8 rounded-lg font-bold text-xl transition-colors">
+                    Volver a Cursos
+                </button>
+            </div>
+        </div>
+
+        <div id="phase-reference" class="phase-content hidden">
+            <h2 class="text-3xl font-bold mb-4 text-center">Tabla de Referencia Rápida</h2>
+            
             <div class="text-center mb-6 p-4 bg-slate-700 rounded-lg shadow-inner">
                 <p id="current-playing" class="text-5xl font-extrabold text-emerald-400 mb-2">—</p>
                 <p id="current-morse" class="text-4xl font-mono text-purple-400">—</p>
@@ -112,102 +156,22 @@
                     <div id="letters-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3">
                         </div>
                 </div>
-
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-emerald-400 border-b border-slate-700 pb-1">Números (0-9)</h3>
-                    <div id="numbers-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-emerald-400 border-b border-slate-700 pb-1">Símbolos Comunes</h3>
-                    <div id="punctuation-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        </div>
-                </div>
             </div>
-        </div>
-
-        <div id="phase-decode" class="phase-content hidden">
-            <h2 class="text-3xl font-bold mb-4 text-center">2. Decodificación (Letras o Palabras)</h2>
-            <p class="text-center text-slate-400 mb-6">Escucha el código Morse y elige la respuesta correcta.</p>
-
-            <div class="p-6 bg-slate-700 rounded-lg text-center mb-6">
-                <p id="morse-display" class="text-4xl font-mono text-purple-400 mb-4">•—•—•</p>
-                <button onclick="playCurrentMorse()" class="bg-emerald-600 hover:bg-emerald-700 py-2 px-4 rounded-lg font-semibold transition-colors">
-                    🔊 Escuchar de nuevo
-                </button>
-                <p class="text-sm text-slate-400 mt-2">¿Qué es?</p>
-            </div>
-
-            <p id="decode-question-num" class="text-lg text-center font-semibold mb-4">Pregunta 1 de 10</p>
-            
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <button id="option-0" onclick="selectAnswer(0)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN A</button>
-                <button id="option-1" onclick="selectAnswer(1)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN B</button>
-                <button id="option-2" onclick="selectAnswer(2)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN C</button>
-                <button id="option-3" onclick="selectAnswer(3)" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold">OPCIÓN D</button>
-            </div>
-
-            <div id="decode-feedback" class="text-center mb-6">
-                </div>
-
-            <button id="next-decode" onclick="nextDecodeQuestion()" class="hidden w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-bold transition-colors">
-                Siguiente Pregunta →
-            </button>
-        </div>
-        
-        <div id="phase-encode" class="phase-content hidden">
-            <h2 class="text-3xl font-bold mb-4 text-center">3. Codificación (Caracteres)</h2>
-            <p class="text-center text-slate-400 mb-6">Dada una letra o número, ingresa el código Morse correcto.</p>
-
-            <p id="encode-question-num" class="text-lg text-center font-semibold mb-4">Pregunta 1 de 10</p>
-            
-            <div class="p-8 bg-slate-700 rounded-lg text-center mb-6">
-                <p class="text-xl text-slate-400 mb-2">Codifica el siguiente carácter:</p>
-                <p id="char-display" class="text-7xl font-extrabold text-emerald-400">A</p>
-            </div>
-
-            <div class="p-4 bg-slate-600 rounded-lg text-center mb-6">
-                <p id="user-morse" class="text-3xl font-mono text-white min-h-8">Ingresa el código...</p>
-            </div>
-
-            <div class="flex justify-center gap-4 mb-6">
-                <button onclick="addDot()" class="bg-emerald-600 hover:bg-emerald-700 py-3 px-6 rounded-lg font-bold text-2xl">
-                    • (Punto)
-                </button>
-                <button onclick="addDash()" class="bg-red-600 hover:bg-red-700 py-3 px-6 rounded-lg font-bold text-2xl">
-                    — (Raya)
-                </button>
-                <button onclick="clearMorse()" class="bg-slate-500 hover:bg-slate-600 py-3 px-6 rounded-lg font-bold">
-                    Borrar
-                </button>
-            </div>
-
-            <div id="encode-feedback" class="text-center mb-6">
-                </div>
-
-            <button onclick="checkEncode()" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-bold transition-colors mb-4">
-                Comprobar Código
-            </button>
-            
-            <button id="next-encode" onclick="nextEncodeQuestion()" class="hidden w-full bg-slate-500 hover:bg-slate-600 py-3 rounded-lg font-bold transition-colors">
-                Siguiente Pregunta →
-            </button>
         </div>
         
         <div id="phase-challenge" class="phase-content hidden">
-            <h2 class="text-3xl font-bold mb-4 text-center">4. Desafío de Velocidad</h2>
-            <p class="text-center text-slate-400 mb-6">Decodifica la mayor cantidad de palabras posibles en 60 segundos. Tienes 3 errores.</p>
+            <h2 class="text-3xl font-bold mb-4 text-center">Desafío Global de Velocidad</h2>
+            <p class="text-center text-slate-400 mb-6">Decodifica la mayor cantidad de palabras posibles en 60 segundos.</p>
 
             <div id="challenge-setup" class="p-6 bg-slate-700 rounded-lg text-center">
-                <p class="text-2xl font-semibold mb-4">¡Prepárate para la prueba de velocidad!</p>
+                <p class="text-2xl font-semibold mb-4">¡Prueba tu dominio en el idioma seleccionado!</p>
                 <button onclick="startChallenge()" class="bg-emerald-600 hover:bg-emerald-700 py-3 px-8 rounded-lg font-bold text-xl transition-colors">
                     Comenzar Desafío
                 </button>
             </div>
             
             <div id="challenge-game" class="hidden">
-                <div class="flex justify-between items-center mb-4 p-4 bg-slate-700 rounded-lg">
+                 <div class="flex justify-between items-center mb-4 p-4 bg-slate-700 rounded-lg">
                     <div>
                         <p class="text-sm text-slate-400">Tiempo</p>
                         <p id="challenge-time" class="text-3xl font-bold text-red-400">60</p>
@@ -242,8 +206,8 @@
                 <p class="text-xl text-slate-200 mb-4">Decodificaste:</p>
                 <p id="final-score" class="text-5xl font-extrabold text-emerald-400 mb-6">0</p>
                 <p id="performance-message" class="text-xl font-semibold mb-6">Mensaje de rendimiento.</p>
-                <button onclick="restartChallenge()" class="bg-purple-600 hover:bg-purple-700 py-3 px-8 rounded-lg font-bold text-xl transition-colors">
-                    Reiniciar Desafío
+                <button onclick="showPhase('courses')" class="bg-purple-600 hover:bg-purple-700 py-3 px-8 rounded-lg font-bold text-xl transition-colors">
+                    Volver a Cursos
                 </button>
             </div>
         </div>

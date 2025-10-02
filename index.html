@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Master - Juego Didáctico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen text-white">
+    <header class="bg-black/20 backdrop-blur-sm border-b border-purple-500/20 p-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-lg flex items-center justify-center">
+                    <span class="text-black font-bold text-lg">M</span>
+                </div>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    Morse Master
+                </h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-right">
+                    <div class="text-sm text-gray-400">Puntuación</div>
+                    <div class="text-xl font-bold text-emerald-400" id="score">0</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-400">Nivel</div>
+                    <div class="text-xl font-bold text-cyan-400" id="level">1</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-6xl mx-auto p-6">
+        <div class="mb-8">
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <button onclick="showPhase('reference')" id="btn-reference" class="phase-btn bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2">
+                    <span>📚</span>
+                    <span>Referencia</span>
+                </button>
+                <button onclick="showPhase('decode')" id="btn-decode" class="phase-btn bg-slate-600 hover:bg-slate-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2">
+                    <span>🔍</span>
+                    <span>Decodificar</span>
+                </button>
+                <button onclick="showPhase('encode')" id="btn-encode" class="phase-btn bg-slate-600 hover:bg-slate-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2">
+                    <span>⚡</span>
+                    <span>Codificar</span>
+                </button>
+                <button onclick="showPhase('challenge')" id="btn-challenge" class="phase-btn bg-slate-600 hover:bg-slate-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2">
+                    <span>🏆</span>
+                    <span>Desafío</span>
+                </button>
+            </div>
+            
+            <div class="bg-slate-800 rounded-full h-2 mb-4">
+                <div id="progress" class="progress-bar bg-gradient-to-r from-emerald-400 to-cyan-400 h-2 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="phase-reference" class="phase-content">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    Tabla de Referencia - Código Morse
+                </h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="morse-category">
+                        <h3 class="text-lg font-semibold text-emerald-400 mb-4">Letras</h3>
+                        <div id="letters-grid" class="space-y-2"></div>
+                    </div>
+                    <div class="morse-category">
+                        <h3 class="text-lg font-semibold text-cyan-400 mb-4">Números</h3>
+                        <div id="numbers-grid" class="space-y-2"></div>
+                    </div>
+                    <div class="morse-category">
+                        <h3 class="text-lg font-semibold text-purple-400 mb-4">Puntuación</h3>
+                        <div id="punctuation-grid" class="space-y-2"></div>
+                    </div>
+                    <div class="morse-category">
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-4">Audio</h3>
+                        <div class="space-y-4">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-400 mb-2">Reproduciendo:</div>
+                                <div id="current-playing" class="text-xl font-bold text-white mb-2">-</div>
+                                <div id="current-morse" class="text-lg text-emerald-400 mb-4">-</div>
+                                <button id="stop-audio" onclick="stopAudio()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition-colors">
+                                    ⏹️ Detener
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-gray-400 mb-4">Haz clic en cualquier carácter para escuchar su código Morse</p>
+                    <button onclick="showPhase('decode')" class="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+                        Comenzar Práctica →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="phase-decode" class="phase-content hidden">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    Práctica de Decodificación
+                </h2>
+                
+                <div class="max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <div class="text-sm text-gray-400 mb-2">Pregunta <span id="decode-question-num">1</span> de 10</div>
+                        <div class="bg-slate-700 rounded-lg p-6 mb-6">
+                            <div class="text-lg text-gray-400 mb-4">Decodifica este código Morse:</div>
+                            <div id="morse-display" class="text-3xl font-mono text-emerald-400 mb-4 min-h-[50px] flex items-center justify-center"></div>
+                            <button id="play-morse" onclick="playCurrentMorse()" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition-colors">
+                                🔊 Reproducir Audio
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <button onclick="selectAnswer(0)" id="option-0" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                            <button onclick="selectAnswer(1)" id="option-1" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                            <button onclick="selectAnswer(2)" id="option-2" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                            <button onclick="selectAnswer(3)" id="option-3" class="option-btn bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                        </div>
+                        
+                        <div id="decode-feedback" class="mb-6 min-h-[60px] flex items-center justify-center"></div>
+                        
+                        <button id="next-decode" onclick="nextDecodeQuestion()" class="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hidden">
+                            Siguiente →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="phase-encode" class="phase-content hidden">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    Práctica de Codificación
+                </h2>
+                
+                <div class="max-w-2xl mx-auto">
+                    <div class="text-center mb-8">
+                        <div class="text-sm text-gray-400 mb-2">Pregunta <span id="encode-question-num">1</span> de 10</div>
+                        <div class="bg-slate-700 rounded-lg p-6 mb-6">
+                            <div class="text-lg text-gray-400 mb-4">Codifica este carácter en Morse:</div>
+                            <div id="char-display" class="text-6xl font-bold text-emerald-400 mb-4 min-h-[80px] flex items-center justify-center"></div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="text-lg text-gray-400 mb-4">Tu código:</div>
+                            <div id="user-morse" class="bg-slate-700 rounded-lg p-4 min-h-[60px] text-2xl font-mono text-emerald-400 flex items-center justify-center mb-4"></div>
+                            
+                            <div class="flex justify-center space-x-4 mb-4">
+                                <button onclick="addDot()" class="bg-emerald-600 hover:bg-emerald-700 px-8 py-4 rounded-lg text-2xl font-bold transition-colors">
+                                    • Punto
+                                </button>
+                                <button onclick="addDash()" class="bg-cyan-600 hover:bg-cyan-700 px-8 py-4 rounded-lg text-2xl font-bold transition-colors">
+                                    — Raya
+                                </button>
+                            </div>
+                            
+                            <div class="flex justify-center space-x-4">
+                                <button onclick="clearMorse()" class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg transition-colors">
+                                    🗑️ Limpiar
+                                </button>
+                                <button onclick="checkEncode()" class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-lg transition-colors">
+                                    ✓ Verificar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="encode-feedback" class="mb-6 min-h-[60px] flex items-center justify-center"></div>
+                        
+                        <button id="next-encode" onclick="nextEncodeQuestion()" class="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hidden">
+                            Siguiente →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="phase-challenge" class="phase-content hidden">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/20">
+                <h2 class="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                    Desafío Final
+                </h2>
+                
+                <div class="max-w-2xl mx-auto text-center">
+                    <div id="challenge-setup" class="mb-8">
+                        <div class="bg-slate-700 rounded-lg p-6 mb-6">
+                            <h3 class="text-xl font-semibold text-yellow-400 mb-4">🏆 Modo Supervivencia</h3>
+                            <p class="text-gray-300 mb-4">Decodifica tantos códigos Morse como puedas antes de cometer 3 errores</p>
+                            <div class="flex justify-center space-x-8 mb-6">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-emerald-400" id="challenge-score">0</div>
+                                    <div class="text-sm text-gray-400">Aciertos</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-red-400" id="challenge-errors">0</div>
+                                    <div class="text-sm text-gray-400">Errores</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-cyan-400" id="challenge-time">60</div>
+                                    <div class="text-sm text-gray-400">Tiempo</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="startChallenge()" class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 px-8 py-4 rounded-lg text-xl font-bold transition-all duration-300">
+                            🚀 Comenzar Desafío
+                        </button>
+                    </div>
+                    
+                    <div id="challenge-game" class="hidden">
+                        <div class="bg-slate-700 rounded-lg p-6 mb-6">
+                            <div id="challenge-morse" class="text-3xl font-mono text-emerald-400 mb-4 min-h-[50px] flex items-center justify-center"></div>
+                            <button id="challenge-play" onclick="playChallengeAudio()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors mb-4">
+                                🔊 Reproducir
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <button onclick="challengeAnswer(0)" id="challenge-option-0" class="challenge-option bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                            <button onclick="challengeAnswer(1)" id="challenge-option-1" class="challenge-option bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                            <button onclick="challengeAnswer(2)" id="challenge-option-2" class="challenge-option bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                            <button onclick="challengeAnswer(3)" id="challenge-option-3" class="challenge-option bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition-all duration-300 text-xl font-semibold"></button>
+                        </div>
+                    </div>
+                    
+                    <div id="challenge-results" class="hidden">
+                        <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-8 mb-6">
+                            <h3 class="text-2xl font-bold mb-4">¡Desafío Completado!</h3>
+                            <div class="text-4xl font-bold text-yellow-400 mb-2" id="final-score">0</div>
+                            <div class="text-lg text-gray-200 mb-4" id="performance-message"></div>
+                            <div class="flex justify-center space-x-4">
+                                <button onclick="restartChallenge()" class="bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    🔄 Intentar de Nuevo
+                                </button>
+                                <button onclick="showPhase('reference')" class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    📚 Volver al Inicio
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

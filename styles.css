@@ -13,11 +13,10 @@
 
 /*
  * La clase 'pulse' se aplica dinámicamente con JavaScript
- * para simular la reproducción del sonido, tanto en referencia como en juego.
+ * para simular la reproducción del sonido.
  */
 .pulse {
     /* La animación real se define en la configuración de Tailwind en index.html */
-    /* Aquí solo se pone la base para que el JS sepa que existe. */
     opacity: 1; 
 }
 
@@ -25,7 +24,6 @@
 
 /*
  * Esta clase estiliza las tarjetas de Puntuación Total, Nivel y Puntuación Máxima.
- * Se usan colores definidos en la configuración de Tailwind en index.html.
  */
 .stats-card {
     background-color: #334155; /* slate-700 */
@@ -39,7 +37,6 @@
 
 /*
  * Animación de rebote para mensajes de éxito
- * Usado en la retroalimentación de las fases de Decodificación y Codificación.
  */
 @keyframes bounce {
     0%, 100% {
@@ -54,15 +51,20 @@
     animation: bounce 0.5s ease-in-out;
 }
 
-/* 5. Estilos de la Tabla de Referencia */
+/* 5. Estilos de la Tabla de Referencia y Selectores */
 
-/*
- * Estilo de la celda de Morse en la tabla.
- */
+/* Estilo para los elementos de las tablas (letras, números, abecedario ordenado) */
 .morse-item {
     transition: background-color 0.3s ease; /* Transición para hover */
+    /* Asegura que el código morse sea legible */
 }
 
 .morse-item span:last-child {
-    font-size: 1.1rem; /* Ajuste para el código morse */
+    font-size: 1.1rem; 
+}
+
+/* Estilo básico para los selectores de idioma y modo para que coincidan con el tema oscuro */
+select {
+    border: 1px solid #475569; /* slate-600 */
+    color: white;
 }

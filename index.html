@@ -72,6 +72,35 @@
         <div id="phase-reference" class="phase-content">
             <h2 class="text-3xl font-bold mb-4 text-center">Tabla de Referencia (¡Haz clic!)</h2>
             
+            <div class="mb-8 p-4 bg-purple-900/50 rounded-lg">
+                <h3 class="text-xl font-bold text-purple-400 mb-3">⚙️ Configuración y Lecciones</h3>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <div>
+                        <label class="block text-slate-300 mb-1">Modo de Práctica</label>
+                        <select id="mode-select" onchange="setGameMode(this.value)" class="bg-slate-700 text-white p-2 rounded">
+                            <option value="LETTERS">Letras (Individuales)</option>
+                            <option value="WORDS" selected>Palabras (Decodificación)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 mb-1">Idioma de Palabras</label>
+                        <select id="language-select" onchange="setGameLanguage(this.value)" class="bg-slate-700 text-white p-2 rounded">
+                            <option value="ES" selected>Español</option>
+                            <option value="EN">Inglés</option>
+                        </select>
+                    </div>
+                    <button onclick="showAlphabetOrder()" class="bg-purple-600 hover:bg-purple-700 py-2 px-4 rounded-lg font-semibold self-end">
+                        Mostrar Abecedario en Orden
+                    </button>
+                </div>
+            </div>
+
+            <div id="alphabet-order-container" class="hidden mt-6 mb-8 p-4 bg-slate-700 rounded-lg">
+                <h3 class="text-xl font-bold text-emerald-400 mb-3">Abecedario en Orden (A-Z)</h3>
+                <div id="alphabet-order-grid" class="grid grid-cols-5 md:grid-cols-7 gap-3">
+                    </div>
+            </div>
+
             <div class="text-center mb-6 p-4 bg-slate-700 rounded-lg shadow-inner">
                 <p id="current-playing" class="text-5xl font-extrabold text-emerald-400 mb-2">—</p>
                 <p id="current-morse" class="text-4xl font-mono text-purple-400">—</p>
@@ -99,15 +128,15 @@
         </div>
 
         <div id="phase-decode" class="phase-content hidden">
-            <h2 class="text-3xl font-bold mb-4 text-center">2. Decodificación (Palabras Comunes)</h2>
-            <p class="text-center text-slate-400 mb-6">Escucha el código Morse (palabra) y elige la respuesta correcta.</p>
+            <h2 class="text-3xl font-bold mb-4 text-center">2. Decodificación (Letras o Palabras)</h2>
+            <p class="text-center text-slate-400 mb-6">Escucha el código Morse y elige la respuesta correcta.</p>
 
             <div class="p-6 bg-slate-700 rounded-lg text-center mb-6">
                 <p id="morse-display" class="text-4xl font-mono text-purple-400 mb-4">•—•—•</p>
                 <button onclick="playCurrentMorse()" class="bg-emerald-600 hover:bg-emerald-700 py-2 px-4 rounded-lg font-semibold transition-colors">
                     🔊 Escuchar de nuevo
                 </button>
-                <p class="text-sm text-slate-400 mt-2">¿Qué palabra es?</p>
+                <p class="text-sm text-slate-400 mt-2">¿Qué es?</p>
             </div>
 
             <p id="decode-question-num" class="text-lg text-center font-semibold mb-4">Pregunta 1 de 10</p>
